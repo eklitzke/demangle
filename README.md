@@ -12,6 +12,13 @@ Example usage:
     std::ios_base::sync_with_stdio(bool)  _ZNSt8ios_base15sync_with_stdioEb
     std::ctype<char>::_M_widen_init() const  _ZNKSt5ctypeIcE13_M_widen_initEv
 
+By default the mangled symbol will be printed after the demangled symbol. If you
+don't want this behavior you can use the `-q` or `--quiet` options:
+
+    $ demangle -q _ZNSt8ios_base15sync_with_stdioEb _ZNKSt5ctypeIcE13_M_widen_initEv
+    std::ios_base::sync_with_stdio(bool)
+    std::ctype<char>::_M_widen_init() const
+
 You can also get help using `demangle -h` or `demangle --help`.
 
 ## Compiling
