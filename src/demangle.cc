@@ -28,12 +28,16 @@ static const char personality[] = "Microsoft Visual Studio";
 static const char personality[] = "Unknown";
 #endif
 
-static void demangle(const char *mangled_name) {
+static void demangle(const char *mangled_name, bool quiet) {
   int status = 0;
   const char *realname = abi::__cxa_demangle(mangled_name, 0, 0, &status);
   switch (status) {
   case 0:
-    printf("%s  %s\n", realname, mangled_name);
+    if (quiet) {
+      puts(realname);
+    } else {
+      printf("%s  %s\n", realname, mangled_name);
+    }
     break;
   case -1:
     printf("FAIL: failed to allocate memory while demangling %s\n",
@@ -54,30 +58,37 @@ static void demangle(const char *mangled_name) {
 
 int main(int argc, char **argv) {
   int c;
+  bool quiet = false;
   for (;;) {
     static struct option long_options[] = {{"help", no_argument, 0, 'h'},
                                            {"personality", no_argument, 0, 'p'},
+                                           {"quiet", no_argument, 0, 'q'},
                                            {0, 0, 0, 0}};
     int option_index = 0;
-    c = getopt_long(argc, argv, "hp", long_options, &option_index);
+    c = getopt_long(argc, argv, "hpq", long_options, &option_index);
     if (c == -1) {
       break;
     }
     switch (c) {
     case 'h':
-      printf("Usage: %s [-h|--help] [-p|--personality] [MANGLED]...\n", argv[0]);
+      printf("Usage: %s [-h|--help] [-p|--personality] [-q|--quiet] "
+             "[MANGLED]...\n",
+             argv[0]);
       return 0;
     case 'p':
       printf("Personality: %s\n", personality);
       break;
-    case '?':
+    case 'q':
+      quiet = true;
       break;
+    case '?':
     default:
-      abort();
+      printf("Option '-%c' is invalid: ignored\n", optopt);
+      break;
     }
   }
 
   for (int i = optind; i < argc; i++) {
-    demangle(argv[i]);
+    demangle(argv[i], quiet);
   }
 }
