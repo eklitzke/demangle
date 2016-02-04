@@ -5,7 +5,6 @@ AC_PREREQ([2.69])
 AC_INIT(demangle, 1.0, evan@eklitzke.org)
 AC_CONFIG_SRCDIR([src/demangle.cc])
 AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
 AC_PROG_CXX
