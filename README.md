@@ -31,13 +31,21 @@ particular, if you want to demangle GCC symbols you need to compile this with
 GCC. Likewise, if you want to demangle Clang symbols you need to compile this
 with Clang.
 
-### Clang
+### Clang on Linux
 
 I have intentionally avoided the use of any C++ standard library methods to make
 this easy to compile on Linux systems that normally use GCC's libstdc++. If
 you're on a Linux system like Debian, Ubuntu, Fedora, or likely any other
 distribution that normally uses GCC and you want to build this with Clang to
-demangle Clange symbols you can compile it like this:
+demangle Clang symbols you can compile it like this:
 
     CXX=clang++ ./configure
+    make
+
+### GCC on OS X
+
+The same applies for OS X, which normally uses Clang. If you want to demangle
+GCC symbols you'd do:
+
+    CXX=g++ ./configure
     make
