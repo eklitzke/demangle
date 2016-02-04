@@ -30,9 +30,8 @@ that will be built at `src/demangle`.
 particular, if you want to demangle GCC symbols you need to compile this with
 GCC. Likewise, if you want to demangle Clang symbols you need to compile this
 with Clang. I have intentionally avoided the use of any C++ standard library
-methods to make this easy to compile on Linux systems that normally use a
-different C++ standard library implementation than the one that is the default
-on your system.
+methods to make this easy to compile on Linux to demangle OS X symbols, and
+likewise to make it easy to compile on OS X to demangle Linux sysmbols.
 
 ### Clang on Linux
 
