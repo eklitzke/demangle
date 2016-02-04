@@ -16,8 +16,17 @@
 #include <stdlib.h>
 #include <cxxabi.h>
 
-static struct option long_options[] = {{"help", no_argument, 0, 'h'},
-                                       {0, 0, 0, 0}};
+#if defined(__clang__)
+static const char personality[] = "Clang/LLVM";
+#elif defined(__ICC) || defined(__INTEL_COMPILER)
+static const char personality[] = "Intel ICC/ICPC";
+#elif defined(__GNUC__) || defined(__GNUG__)
+static const char personality[] = "GNU GCC/G++";
+#elif defined(_MSC_VER)
+static const char personality[] = "Microsoft Visual Studio";
+#else
+static const char personality[] = "Unknown";
+#endif
 
 static void demangle(const char *mangled_name) {
   int status = 0;
@@ -46,15 +55,21 @@ static void demangle(const char *mangled_name) {
 int main(int argc, char **argv) {
   int c;
   for (;;) {
+    static struct option long_options[] = {{"help", no_argument, 0, 'h'},
+                                           {"personality", no_argument, 0, 'p'},
+                                           {0, 0, 0, 0}};
     int option_index = 0;
-    c = getopt_long(argc, argv, "h", long_options, &option_index);
+    c = getopt_long(argc, argv, "hp", long_options, &option_index);
     if (c == -1) {
       break;
     }
     switch (c) {
     case 'h':
-      printf("Usage: %s [-h|--help] [MANGLED]...\n", argv[0]);
+      printf("Usage: %s [-h|--help] [-p|--personality] [MANGLED]...\n", argv[0]);
       return 0;
+    case 'p':
+      printf("Personality: %s\n", personality);
+      break;
     case '?':
       break;
     default:

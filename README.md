@@ -33,6 +33,9 @@ with Clang. I have intentionally avoided the use of any C++ standard library
 methods to make this easy to compile on Linux to demangle OS X symbols, and
 likewise to make it easy to compile on OS X to demangle Linux sysmbols.
 
+You can figure out what "personality" the demangler was compiled with using the
+`-p` or `--personality` option.
+
 ### Clang on Linux
 
 If you're on a Linux system like Debian, Ubuntu, Fedora, or likely any other
@@ -44,6 +47,13 @@ CXX=clang++ ./configure
 make
 ```
 
+Then you should see:
+
+```
+$ demangle -p
+Personality: Clang/LLVM
+```
+
 ### GCC on OS X
 
 The same applies for OS X, which normally uses Clang. If you want to demangle
@@ -52,4 +62,11 @@ GCC symbols you can compile like this:
 ```bash
 CXX=g++ ./configure
 make
+```
+
+Then you should see:
+
+```
+$ demangle -p
+Personality: GNU GCC/G++
 ```
