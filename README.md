@@ -25,3 +25,19 @@ You'll need autotools, make, and a C++ compiler. Then you should be able to do:
 
 If you don't want to run the `make install` step you can directly use the binary
 that will be built at `src/demangle`.
+
+**Note:*** the C++ compiler you use affects which symbols you can demangle. In
+particular, if you want to demangle GCC symbols you need to compile this with
+GCC. Likewise, if you want to demangle Clang symbols you need to compile this
+with Clang.
+
+### Clang
+
+I have intentionally avoided the use of any C++ standard library methods to make
+this easy to compile on Linux systems that normally use GCC's libstdc++. If
+you're on a Linux system like Debian, Ubuntu, Fedora, or likely any other
+distribution that normally uses GCC and you want to build this with Clang to
+demangle Clange symbols you can compile it like this:
+
+    CXX=clang++ ./configure
+    make

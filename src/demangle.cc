@@ -11,7 +11,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <iostream>
+#include <stdio.h>
 #include <getopt.h>
 #include <stdlib.h>
 #include <cxxabi.h>
@@ -24,18 +24,18 @@ static void demangle(const char *mangled_name) {
   const char *realname = abi::__cxa_demangle(mangled_name, 0, 0, &status);
   switch (status) {
   case 0:
-    std::cout << realname << "  " << mangled_name << "\n";
+    printf("%s  %s\n", realname, mangled_name);
     break;
   case -1:
-    std::cout << "FAIL: failed to allocate memory while demangling "
-              << mangled_name << "\n";
+    printf("FAIL: failed to allocate memory while demangling %s\n",
+           mangled_name);
     break;
   case -2:
-    std::cout << "FAIL: " << mangled_name << " is not a valid name under "
-              << "the C++ ABI mangling runles\n";
+    printf("FAIL: %s is not a valid name under the C++ ABI mangling rules\n",
+           mangled_name);
     break;
   default:
-    std::cout << "FAIL: some other unexpected error\n";
+    printf("FAIL: some other unexpected error: %d\n", status);
     break;
   }
   if (realname != NULL) {
@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
     }
     switch (c) {
     case 'h':
-      std::cout << "usage: " << argv[1] << " [-h|--help] [MANGLED]...\n";
+      printf("Usage: %s [-h|--help] [MANGLED]...\n", argv[0]);
       return 0;
     case '?':
       break;
