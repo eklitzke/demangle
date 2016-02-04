@@ -70,8 +70,7 @@ int main(int argc, char **argv) {
     switch (c) {
     case 'h':
       printf("Usage: %s [-h|--help] [-p|--personality] [-q|--quiet] "
-             "[MANGLED]...\n",
-             argv[0]);
+             "[MANGLED]...\n", argv[0]);
       return 0;
     case 'p':
       printf("Personality: %s\n", personality);
