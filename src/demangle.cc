@@ -51,9 +51,7 @@ static void demangle(const char *mangled_name, bool quiet) {
     printf("FAIL: some other unexpected error: %d\n", status);
     break;
   }
-  if (realname != NULL) {
-    free((void *)realname);
-  }
+  free((void *)realname);
 }
 
 int main(int argc, char **argv) {
