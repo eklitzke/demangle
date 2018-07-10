@@ -23,13 +23,14 @@ You can also get help using `demangle -h` or `demangle --help`.
 
 ## Compiling
 
-You'll need autotools, make, and a C++ compiler. Then you should be able to do:
-
-    ./autogen.sh
-    ./configure
+You'll need CMake, make, and a C++ compiler. Then you should be able to do:
+```
+    mkdir build
+    cd build
+    cmake ..
     make
-    make install
-
+    sudo make install
+```
 If you don't want to run the `make install` step you can directly use the binary
 that will be built at `src/demangle`.
 
@@ -43,15 +44,19 @@ likewise to make it easy to compile on OS X to demangle Linux sysmbols.
 You can figure out what "personality" the demangler was compiled with using the
 `-p` or `--personality` option.
 
-### Clang on Linux
+## Switching between Clang and GCC u
 
-If you're on a Linux system like Debian, Ubuntu, Fedora, or likely any other
-distribution that normally uses GCC and you want to build this with Clang to
-demangle Clang symbols you can compile it like this:
+CMake honors the environment variables CC and CXX upon detecting the C and C++ compiler to use.
+### Clang
 
-```bash
-CXX=clang++ ./configure
+```
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
+mkdir build
+cd build
+cmake ..
 make
+sudo make install
 ```
 
 Then you should see:
@@ -61,16 +66,17 @@ $ demangle -p
 Personality: Clang/LLVM
 ```
 
-### GCC on OS X
+### GCC
 
-The same applies for OS X, which normally uses Clang. If you want to demangle
-GCC symbols you can compile like this:
-
-```bash
-CXX=g++ ./configure
-make
 ```
-
+export CC=/usr/bin/gcc
+export CXX=/usr/bin/g++
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+```
 Then you should see:
 
 ```
