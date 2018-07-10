@@ -31,8 +31,8 @@ You'll need CMake, make, and a C++ compiler. Then you should be able to do:
     make
     sudo make install
 ```
-If you don't want to run the `make install` step you can directly use the binary
-that will be built at `src/demangle`.
+If you don't want to run the `sudo make install` step you can directly use the binary
+that will be built at `build`.
 
 **Note:** the C++ compiler you use affects which symbols you can demangle. In
 particular, if you want to demangle GCC symbols you need to compile this with
