@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <getopt.h>
 #include <stdlib.h>
+#include <string.h>
 #include <cxxabi.h>
 
 #if defined(__clang__)
@@ -84,8 +85,20 @@ int main(int argc, char **argv) {
       break;
     }
   }
-
-  for (int i = optind; i < argc; i++) {
-    demangle(argv[i], quiet);
+  
+  // demangle args else stdin
+  if (argc > optind) {
+    for (int i = optind; i < argc; i++) {
+      demangle(argv[i], quiet);
+    }
+  } else {
+    char buf[100];
+    while (fgets (buf, sizeof(buf), stdin)) {
+      char *newline = strchr (buf, '\n');
+      if (newline) {
+        *newline = '\0';
+      }
+      demangle(buf, quiet);
+    }
   }
 }
